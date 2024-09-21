@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Nullable>annotations</Nullable>
+    <OutputPath>../dist_temp/</OutputPath>
+    <PublishSingleFile>true</PublishSingleFile>
+    <SelfContained>false</SelfContained>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="NQutils" />
+    <Reference Include="Backend" />
+    <Reference Include="Backend.PubSub" />
+    <Reference Include="Interfaces" />
+    <Reference Include="Router.Orleans" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Orleans.Core" Version="3.6.5" />
+    <PackageReference Include="Microsoft.Orleans.Core.Abstractions" Version="3.6.5" />
+    <PackageReference Include="prometheus-net" Version="6.0.0" />
+    <PackageReference Include="prometheus-net.AspNetCore" Version="6.0.0" />
+  </ItemGroup>
+   <Target Name="CopyDllToDist" AfterTargets="Build">
+    <Copy 
+      SourceFiles="$(OutputPath)$(AssemblyName).dll" 
+      DestinationFolder="../dist/" />
+    <!-- Optionally delete temp folder -->
+    <RemoveDir Directories="../dist_temp" />
+  </Target>
+  <!-- https://github.com/dotnet/efcore/issues/15047 -->
+  <Target Name="AddAssemblyAliasToReactiveAsync" AfterTargets="ResolveAssemblyReferences">
+    <ItemGroup>
+      <ReferencePath Condition=" '%(FileName)' == 'System.Interactive.Async' ">
+        <Aliases>reactive</Aliases>
+      </ReferencePath>
+    </ItemGroup>
+  </Target>
+
+</Project>
