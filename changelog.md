@@ -60,3 +60,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Bug that would show the failover textbox when copying text to clipboard from the debug panel. is fixed now.
 - Bug preventing to use tp command on own player character. 
 - Bug preventing to use ::pos location strings to teleport to custom locations
+
+## [0.2.30] - 2024-09-21
+
+### Changed
+- replaced the github repo to a dedicated one
+
+
+## [0.2.32] - 2024-09-21
+
+### Changed
+- Input for volume items uses a calculation so we can request properly 1000 liters of fuel
+
+### Fixed
+- UI bug that would change default market drop downs due to using the same class
+
+
