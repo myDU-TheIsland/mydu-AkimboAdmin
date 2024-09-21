@@ -209,7 +209,12 @@ class AkimboAdminElementHud extends MousePage {
 			// this.logData(this.HTMLNodes.TPD.selectDropdown.innerText);
 			var tag = this.HTMLNodes.TPD.selectDropdown.innerText;
 			this.logData(tag);
-			this.adminModInteraction.configureTeleporter(this.cInfo.Id,this.cInfo.ConstructId,tag,"destination");
+			this.adminModInteraction.configureTeleporter(
+				this.cInfo.Id,
+				this.cInfo.ConstructId,
+				tag,
+				"destination",
+			);
 		});
 		this.TPTButton = createElement(
 			this.HTMLNodes.teleportButtonBody,
@@ -221,7 +226,12 @@ class AkimboAdminElementHud extends MousePage {
 			// this.logData(this.HTMLNodes.TPD.selectDropdown.innerText);
 			var tag = this.HTMLNodes.TPD.selectDropdown.innerText;
 			this.logData(tag);
-			this.adminModInteraction.configureTeleporter(this.cInfo.Id,this.cInfo.ConstructId,tag,"target");
+			this.adminModInteraction.configureTeleporter(
+				this.cInfo.Id,
+				this.cInfo.ConstructId,
+				tag,
+				"target",
+			);
 		});
 	}
 }

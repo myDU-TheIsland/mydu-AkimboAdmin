@@ -1,11 +1,11 @@
 /* Main Hud */
 import AkimboAdminFunctions from "./classes/functions/AkimboAdminFunctions";
 import AkimboAdminModInteractions from "./classes/functions/AkimboAdminModInteractions";
-import AkimboDebugPanelTab from './classes/tabs/AkimboDebugPanelTab';
-import AkimboItemPanelTab from './classes/tabs/AkimboItemPanelTab';
-import PlayerTeleportTab from './classes/tabs/PlayerTeleportTab';
-import AkimboGeneralPanelTab from './classes/tabs/AkimboGeneralPanelTab';
-import AkimboSettingsPanelTab from './classes/tabs/AkimboSettingsPanelTab';
+import AkimboDebugPanelTab from "./classes/tabs/AkimboDebugPanelTab";
+import AkimboItemPanelTab from "./classes/tabs/AkimboItemPanelTab";
+import PlayerTeleportTab from "./classes/tabs/PlayerTeleportTab";
+import AkimboGeneralPanelTab from "./classes/tabs/AkimboGeneralPanelTab";
+import AkimboSettingsPanelTab from "./classes/tabs/AkimboSettingsPanelTab";
 // import './dependencies/jscolor.js'
 class AkimboAdminHud extends MousePage {
 	constructor() {
@@ -22,24 +22,24 @@ class AkimboAdminHud extends MousePage {
 
 		// hide the initial HTML content for now
 		this.wrapperNode.classList.add("hide");
-        
-        var that = this;
+
+		var that = this;
 		// add an Icon to the notification bar
 		this.notificationIcon = new NotificationIconComponent(
 			"icon_repair_unit", //
 			"akimboAdmin",
 		);
-		
+
 		// add an event when clicked on icon to open the main panel
 		this.notificationIcon.onClickEvent.subscribe(() => that.show(true));
 		hudManager.addNotificationIcon(this.notificationIcon);
 		this.notificationIcon.HTMLNodes.icon.innerText = "A";
-    
-        // assign hooks that can be called from c#
+
+		// assign hooks that can be called from c#
 		engine.on("AkimboAdminHud.show", this.showIt, this);
 		engine.on("AkimboAdminHud.setPlayers", this.setPlayers, this);
 
-        // inject the css if accessible
+		// inject the css if accessible
 		if (typeof injectedCss !== "undefined") {
 			this.adminFunctions.applyInjectedCss(injectedCss);
 		}
@@ -90,25 +90,25 @@ class AkimboAdminHud extends MousePage {
 			"AkimboAdminHud_panel",
 		]);
 
-        // add a header for titles
+		// add a header for titles
 		let header = createElement(this.wrapperNode, "div", [
 			"AkimboAdminHud_header",
 		]);
 
-        // panel name
+		// panel name
 		this.HTMLNodes.panelTitle = createElement(header, "h5", [
 			"panel_title",
 		]);
 		this.HTMLNodes.panelTitle.innerText = "Akimbo Admin HUD";
 
-        // interacting with player
+		// interacting with player
 		this.HTMLNodes.selectedPlayerTitle = createElement(header, "h5", [
 			"panel_title",
 		]);
 		this.HTMLNodes.selectedPlayerTitle.innerText =
 			"Interacting with player: none";
 
-		// close button to close the UI 
+		// close button to close the UI
 		this.HTMLNodes.closeIconButton = createElement(header, "button", [
 			"close_button",
 		]);
@@ -117,7 +117,7 @@ class AkimboAdminHud extends MousePage {
 			this._close(),
 		);
 
-        // create a tab wrapper
+		// create a tab wrapper
 		let tabs = createElement(this.wrapperNode, "div", ["tab-nav"]);
 
 		// add tabs to be used
@@ -136,8 +136,8 @@ class AkimboAdminHud extends MousePage {
 		this.HTMLNodes.tab5 = createElement(tabs, "a", ["tab-link"]);
 		this.HTMLNodes.tab5.innerText = "Settings";
 		this.HTMLNodes.tab5.href = "#tab5";
-        
-        // make a wrapper for tab content
+
+		// make a wrapper for tab content
 		let tabContent = createElement(this.wrapperNode, "div", [
 			"tab-content",
 		]);
@@ -153,14 +153,14 @@ class AkimboAdminHud extends MousePage {
 		tabPane4.id = "tab4";
 		let tabPane5 = createElement(tabContent, "div", ["tab-pane"]);
 		tabPane5.id = "tab5";
-        
-        // create each initial tab content
-        // Content of Tab 4 --> needs to load first for debugging
-		this.DebugPanel = new AkimboDebugPanelTab(tabPane4,this);
-		this.GeneralPanel = new AkimboGeneralPanelTab(tabPane1,this);
-        this.TeleportPanel = new PlayerTeleportTab(tabPane2,this);
-		this.ItemPanel = new AkimboItemPanelTab(tabPane3,this);
-        this.SettingPanel = new AkimboSettingsPanelTab(tabPane5,this);
+
+		// create each initial tab content
+		// Content of Tab 4 --> needs to load first for debugging
+		this.DebugPanel = new AkimboDebugPanelTab(tabPane4, this);
+		this.GeneralPanel = new AkimboGeneralPanelTab(tabPane1, this);
+		this.TeleportPanel = new PlayerTeleportTab(tabPane2, this);
+		this.ItemPanel = new AkimboItemPanelTab(tabPane3, this);
+		this.SettingPanel = new AkimboSettingsPanelTab(tabPane5, this);
 
 		// Add tab functionality
 		this._addTabFunctionality();
@@ -188,7 +188,7 @@ class AkimboAdminHud extends MousePage {
 
 	dumpData() {
 		// this.dumpData(document.baseURI);
-		this.adminFunctions.outputCSSRules(tabPane,that);
+		this.adminFunctions.outputCSSRules(tabPane, that);
 		if (outputDiv && outputDiv.textContent.trim()) {
 			this.dumpData(outputDiv.textContent);
 		} else {
