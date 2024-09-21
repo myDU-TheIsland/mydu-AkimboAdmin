@@ -1,3 +1,4 @@
+/* Specific for all Constructs */
 import AkimboAdminFunctions from "./classes/functions/AkimboAdminFunctions";
 import AkimboAdminModInteractions from "./classes/functions/AkimboAdminModInteractions";
 class AkimboAdminConstructHud extends MousePage {

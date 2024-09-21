@@ -1,3 +1,4 @@
+/* Specific for all Elements */
 import AkimboAdminFunctions from "./classes/functions/AkimboAdminFunctions";
 import AkimboAdminModInteractions from "./classes/functions/AkimboAdminModInteractions";
 import DropDownMenu from "./classes/elements/DropDownMenu";

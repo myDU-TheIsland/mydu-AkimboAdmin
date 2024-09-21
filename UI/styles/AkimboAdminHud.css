@@ -1,4 +1,4 @@
-/* Define CSS variables in a root selector */
+/* Define CSS variables in a root selector to be updated */
 :root {
     --main-background-color: rgba(10, 87, 82, 0.9);
     --header-color: #b6dfed;

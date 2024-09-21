@@ -1,3 +1,4 @@
+/* Main Hud */
 import AkimboAdminFunctions from "./classes/functions/AkimboAdminFunctions";
 import AkimboAdminModInteractions from "./classes/functions/AkimboAdminModInteractions";
 import AkimboDebugPanelTab from './classes/tabs/AkimboDebugPanelTab';

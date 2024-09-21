@@ -1,3 +1,4 @@
+/* Dependency for debug panel */
 CodeMirror.defineMode("javascript", function(config, parserConfig) {
   var indentUnit = config.indentUnit;
   var statementIndent = parserConfig.statementIndent;

@@ -21,9 +21,9 @@
   ],
   "itemFilter": {
     "SingleItems": {
-      "TerritoryUnitBasic": 100,
-      "TerritoryUnitBasicSanctuary": 10,
-      "RepairUnit": 100
+      "TerritoryUnitBasic": 1,
+      "TerritoryUnitBasicSanctuary": 1,
+      "RepairUnit": 1
     },
     "RecursiveSpawnGroups": {
       "WarpCell": 10000,
