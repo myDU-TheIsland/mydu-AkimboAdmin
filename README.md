@@ -22,7 +22,7 @@
 ### Updated Step-by-Step Guide for Installing Mod AkimboAdmin
 
 1. **Download the Latest Release:**
-   - Go to the **[Releases](#)** section of the GitHub repository (link to the releases page).
+   - Go to the **[Releases](https://github.com/jimmybutzen/mydu-AkimboAdmin/releases/)** section of the GitHub repository (link to the releases page).
    - Download the latest release archive (e.g., `ModAkimboAdmin-v1.0.0.zip`) from the assets section. This archive contains the compiled `ModAkimboAdmin.dll` and any required files.
 
 2. **Extract the Files:**
