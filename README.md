@@ -33,7 +33,7 @@
    - Open the installation directory of your MyDU server.
    - Locate the `Mods` folder. If the folder doesn’t exist, create a new folder named `Mods`.
 
-4. **Create the Mod Subdirectory:**
+4. **Optional: Create the Mod Subdirectory:**
    - Inside the `Mods` folder, create a new folder named `ModAkimboAdmin` (if it doesn't already exist).
 
 5. **Place the Files:**
