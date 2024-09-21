@@ -19,23 +19,6 @@
 -  Basic understanding of where to place mod files within the MyDU server directory structure.
 -  Make sure that `Enable HTML screen Units`,`Enable mod actions` & `Enable mod javascript` is turned on in the General settings of the game otherwise the UI will not work !
 
-### Step-by-Step Guide
-
-1. **Download the Mod DLL:**
-
-   -  Ensure you have the compiled `ModAkimboAdmin.dll` file ready.
-
-2. **Prepare the Mod Directory:**
-
-   -  Navigate to your MyDU server installation directory.
-   -  Locate the `Mods` folder. If it doesn't exist, create it.
-
-3. **Create the Mod Subdirectory:**
-   -  Inside the `Mods` folder, create a new subdirectory called `ModAkimboAdmin`.
-4. **Place the Files:**
-   -  Copy the `ModAkimboAdmin.dll` file into the `Mods` folder.
-   -  Download the contents of the folder named `ModAkimboAdmin` and place it inside the new `ModAkimboAdmin` folder in the `Mods` directory.
-
 ### Updated Step-by-Step Guide for Installing Mod AkimboAdmin
 
 1. **Download the Latest Release:**
@@ -54,7 +37,8 @@
    - Inside the `Mods` folder, create a new folder named `ModAkimboAdmin` (if it doesn't already exist).
 
 5. **Place the Files:**
-   - Copy the `ModAkimboAdmin.dll` and any additional files from the unzipped release into the `ModAkimboAdmin` folder inside the `Mods` directory.
+   -  Copy the `ModAkimboAdmin.dll` file into the `Mods` folder.
+   - Copy the `ModAkimboAdmin` folder from the unzipped release into the `Mods` directory.
 
 6. **Restart the MyDU Server:**
    - Restart your MyDU server for the mod to load properly.
