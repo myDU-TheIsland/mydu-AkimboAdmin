@@ -137,6 +137,7 @@ MyDU Server Installation Directory
 
    - all logs will be written to a log file in the `ModAkimboAdmin` folder
 
-## Source file folder
+## Source file folders
 
--  this is only used if you want to modify the mod by yourself
+-  `UI` folder contains all custom UI integrations to show the AdminUI
+-  `Mod` folder contains all the source files to build the ModAkimboAdmin.dll
