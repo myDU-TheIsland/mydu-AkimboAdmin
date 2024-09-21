@@ -36,6 +36,29 @@
    -  Copy the `ModAkimboAdmin.dll` file into the `Mods` folder.
    -  Download the contents of the folder named `ModAkimboAdmin` and place it inside the new `ModAkimboAdmin` folder in the `Mods` directory.
 
+### Updated Step-by-Step Guide for Installing Mod AkimboAdmin
+
+1. **Download the Latest Release:**
+   - Go to the **[Releases](#)** section of the GitHub repository (link to the releases page).
+   - Download the latest release archive (e.g., `ModAkimboAdmin-v1.0.0.zip`) from the assets section. This archive contains the compiled `ModAkimboAdmin.dll` and any required files.
+
+2. **Extract the Files:**
+   - Unzip the downloaded archive (`ModAkimboAdmin-v1.0.0.zip`).
+   - Ensure the unzipped folder contains the `ModAkimboAdmin.dll` and any additional files (such as configuration or assets).
+
+3. **Navigate to Your MyDU Server Installation Directory:**
+   - Open the installation directory of your MyDU server.
+   - Locate the `Mods` folder. If the folder doesn’t exist, create a new folder named `Mods`.
+
+4. **Create the Mod Subdirectory:**
+   - Inside the `Mods` folder, create a new folder named `ModAkimboAdmin` (if it doesn't already exist).
+
+5. **Place the Files:**
+   - Copy the `ModAkimboAdmin.dll` and any additional files from the unzipped release into the `ModAkimboAdmin` folder inside the `Mods` directory.
+
+6. **Restart the MyDU Server:**
+   - Restart your MyDU server for the mod to load properly.
+
 ### Directory Structure
 
 Your MyDU server directory should look like this after installation:
