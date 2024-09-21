@@ -262,7 +262,7 @@ svg#icon_repair_unit {
     position: relative; /* Make sure positioning is relative to its container */
 }
 
-.dropdown_list {
+.akimbo_dropdown_list {
     background-color: #0d181c; /* Dark background for the dropdown */
     color: var(--header-color); /* Text color for the options */
     border: 1px solid var(--border-color); /* Border color for the options */

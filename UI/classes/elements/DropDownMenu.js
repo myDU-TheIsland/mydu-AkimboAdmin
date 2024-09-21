@@ -6,7 +6,7 @@ class DropDownMenu {
         this.selectDropdown.innerText = placeholder; // Custom placeholder
 
         // Dropdown list (hidden by default)
-        this.dropdownList = this.createElement(this.selectBody, "ul", ["dropdown_list", "hide"]);
+        this.dropdownList = this.createElement(this.selectBody, "ul", ["akimbo_dropdown_list", "hide"]);
         this.populateOptions(options); // Add options to the list
 
         // Toggle dropdown visibility on click

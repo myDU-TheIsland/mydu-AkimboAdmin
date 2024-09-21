@@ -51,7 +51,7 @@ class AkimboGeneralPanelTab {
 		that.HTMLNodes.playerSelectDropdown.innerText = "Select a Player";
 		// The dropdown list (hidden by default, shown on click)
 		let dropdownList = createElement(select_body, "ul", [
-			"dropdown_list",
+			"akimbo_dropdown_list",
 			"hide",
 		]);
 
