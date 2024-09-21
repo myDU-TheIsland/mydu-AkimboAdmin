@@ -1,0 +1,68 @@
+/* Define CSS variables in a root selector */
+:root {
+    --main-background-color: rgba(10, 87, 82, 0.9);
+    --header-color: #b6dfed;
+    --border-color: #00e7d8;
+    --button-background-color: rgba(0, 231, 216, 0.5);
+    --button-hover-background-color: #00df89;
+}
+/* Main Panel & Header */
+.AkimboAdminConstructHud_panel {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 25% !important;
+    height: 25% !important;
+    border-radius: 5px;
+    background-color: var(--main-background-color) !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    background-position: center center !important;
+    opacity: 0.8 !important;
+    z-index: 4050 !important;
+    color: #f3f3f3 !important;
+    overflow-y: auto;
+}
+.closeConstructPanel_button {
+    color: #b6dfed !important;
+    font-size: 1.25rem !important;
+    cursor: pointer !important;
+}
+.AkimboAdminConstructHud_header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 10px !important;
+    color: var(--header-color) !important;
+    margin-bottom: 5px !important;
+}
+.panel_title {
+    margin: 0 !important;
+    text-align: center !important;
+    font-size: 1.5rem !important;
+    color: var(--header-color) !important;
+}
+.sub-title {
+    font-size: 1.0rem !important;
+    margin: 10px;
+    color: var(--header-color) !important;
+}
+
+.ConstructContainer-center {
+    background-color: rgba(10, 87, 82, 0.5);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+    justify-content: center;
+    width: 50%;
+    margin: 5px auto;
+    padding: 5px;
+}
+.ConstructRow-flex-center {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+    justify-content: center;
+}

@@ -1,0 +1,5 @@
+/* Minify the css */
+cleancss -o ../dist/ModAkimboAdmin/AkimboAdminHud.css ./styles/AkimboAdminHud.css 
+
+/* Build JS */
+npx webpack
