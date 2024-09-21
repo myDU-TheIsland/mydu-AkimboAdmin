@@ -40,5 +40,8 @@ Make sure you have the following DLLs available before building the source:
 5. **Resolve Any Issues:**
    - If you encounter any missing reference errors, double-check that all the required DLLs are present and correctly referenced in the project.
 
+## Output Location
+After running the build commands, the compiled files will be located in: `../dist/ModAkimboAdmin/`
+
 ## Conclusion
 Once you have added the necessary DLLs and built the source, you can proceed to implement and test your modifications. If you have any questions or need further assistance, feel free to check the project's documentation or reach out to the community.
