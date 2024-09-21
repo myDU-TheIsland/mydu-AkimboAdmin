@@ -13,6 +13,5 @@ public class AkimboBlueprintFunctions
 	public static void Blueprints(IServiceProvider isp, NQ.PlayerId pid, IClusterClient orleans, string message)
 	{
 		return;
-
     }
 }
