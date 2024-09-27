@@ -238,6 +238,72 @@ export default class AkimboAdminModInteractions {
 		}
 	}
 
+	ImportBlueprint(
+		searchstr,
+		magicUse,
+		selectedPlayer,
+	) {
+		if (searchstr !== false) {
+			CPPMod.sendModAction(
+				"AkimboAdmin",
+				3016,
+				[],
+				JSON.stringify({
+					searchstr: searchstr,
+					magicUse : magicUse,
+					selectedPlayer: selectedPlayer ? selectedPlayer : null,
+				}),
+			);
+		}
+	}
+
+	toggleMagicBlueprint(
+		id,free_deploy
+	) {
+		if (id !== false) {
+			CPPMod.sendModAction(
+				"AkimboAdmin",
+				3017,
+				[],
+				JSON.stringify({
+					id: id,
+					free_deploy: free_deploy,
+				}),
+			);
+		}
+	}
+
+	giveBlueprint(
+		id,selectedPlayer
+	) {
+		if (id !== false) {
+			CPPMod.sendModAction(
+				"AkimboAdmin",
+				3018,
+				[],
+				JSON.stringify({
+					id: id,
+					selectedPlayer: selectedPlayer,
+				}),
+			);
+		}
+	}
+
+	deleteBlueprint(
+		id
+	) {
+		if (id !== false) {
+			CPPMod.sendModAction(
+				"AkimboAdmin",
+				3019,
+				[],
+				JSON.stringify({
+					id: id,
+				}),
+			);
+		}
+	}
+
 	logData(data) {
 		if (data !== false) {
 			//this._logToDebugPanel(data);

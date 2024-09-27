@@ -6,6 +6,7 @@ import AkimboItemPanelTab from "./classes/tabs/AkimboItemPanelTab";
 import PlayerTeleportTab from "./classes/tabs/PlayerTeleportTab";
 import AkimboGeneralPanelTab from "./classes/tabs/AkimboGeneralPanelTab";
 import AkimboSettingsPanelTab from "./classes/tabs/AkimboSettingsPanelTab";
+import AkimboBlueprintPanelTab from "./classes/tabs/AkimboBlueprintPanelTab";
 // import './dependencies/jscolor.js'
 class AkimboAdminHud extends MousePage {
 	constructor() {
@@ -38,7 +39,7 @@ class AkimboAdminHud extends MousePage {
 		// assign hooks that can be called from c#
 		engine.on("AkimboAdminHud.show", this.showIt, this);
 		engine.on("AkimboAdminHud.setPlayers", this.setPlayers, this);
-
+        engine.on("AkimboAdminHud.setBlueprints", this.setBlueprints, this);
 		// inject the css if accessible
 		if (typeof injectedCss !== "undefined") {
 			this.adminFunctions.applyInjectedCss(injectedCss);
@@ -50,6 +51,12 @@ class AkimboAdminHud extends MousePage {
 		this.logData("received: " + players);
 		const templ = JSON.parse(players);
 		this.adminFunctions.populatePlayerList(templ.players, this);
+	}
+
+	setBlueprints(blueprints){
+		//this.logData("received: " + blueprints);
+		const tempBP = JSON.parse(blueprints);
+		this.BlueprintPanel.table.updateTableData(tempBP);
 	}
 
 	// set visibility of the UI
@@ -130,6 +137,9 @@ class AkimboAdminHud extends MousePage {
 		this.HTMLNodes.tab3 = createElement(tabs, "a", ["tab-link"]);
 		this.HTMLNodes.tab3.innerText = "Items";
 		this.HTMLNodes.tab3.href = "#tab3";
+		this.HTMLNodes.tab6 = createElement(tabs, "a", ["tab-link"]);
+		this.HTMLNodes.tab6.innerText = "Blueprints";
+		this.HTMLNodes.tab6.href = "#tab6";
 		this.HTMLNodes.tab4 = createElement(tabs, "a", ["tab-link"]);
 		this.HTMLNodes.tab4.innerText = "Debug";
 		this.HTMLNodes.tab4.href = "#tab4";
@@ -149,6 +159,8 @@ class AkimboAdminHud extends MousePage {
 		tabPane2.id = "tab2";
 		let tabPane3 = createElement(tabContent, "div", ["tab-pane"]);
 		tabPane3.id = "tab3";
+		let tabPane6 = createElement(tabContent, "div", ["tab-pane"]);
+		tabPane6.id = "tab6";
 		let tabPane4 = createElement(tabContent, "div", ["tab-pane"]);
 		tabPane4.id = "tab4";
 		let tabPane5 = createElement(tabContent, "div", ["tab-pane"]);
@@ -161,7 +173,7 @@ class AkimboAdminHud extends MousePage {
 		this.TeleportPanel = new PlayerTeleportTab(tabPane2, this);
 		this.ItemPanel = new AkimboItemPanelTab(tabPane3, this);
 		this.SettingPanel = new AkimboSettingsPanelTab(tabPane5, this);
-
+        this.BlueprintPanel = new AkimboBlueprintPanelTab(tabPane6,this);
 		// Add tab functionality
 		this._addTabFunctionality();
 	}
