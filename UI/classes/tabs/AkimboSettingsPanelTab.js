@@ -13,24 +13,24 @@ class AkimboSettingsPanelTab {
 		let settingTitle = createElement(settingsContainer, "h2", ["sub-title"]);
 		settingTitle.innerText = "Settings";
 
-		// Create a checkbox to toggle visibility
-		let toggleContainer = createElement(settingsContainer, "div", ["toggle-container"]);
-		let checkboxLabel = createElement(toggleContainer, "label", []);
-		checkboxLabel.innerText = "Toggle Settings Visibility";
+		// // Create a checkbox to toggle visibility
+		// let toggleContainer = createElement(settingsContainer, "div", ["toggle-container"]);
+		// let checkboxLabel = createElement(toggleContainer, "label", []);
+		// checkboxLabel.innerText = "Toggle Settings Visibility";
 
-		let checkbox = createElement(toggleContainer, "input", []);
-		checkbox.setAttribute("type", "checkbox");
-		checkbox.checked = false;  // Default to unchecked, meaning not visible
+		// let checkbox = createElement(toggleContainer, "input", []);
+		// checkbox.setAttribute("type", "checkbox");
+		// checkbox.checked = false;  // Default to unchecked, meaning not visible
 
-		// Create the godmode toggle
-		let godmode_toggle = createElement(tabPane, "kbd");
-		godmode_toggle.setAttribute("data-key", "TOGGLE_GOD_MODE");
-		godmode_toggle.innerHTML = "G"; // Key representation
+		// // Create the godmode toggle
+		// let godmode_toggle = createElement(tabPane, "kbd");
+		// godmode_toggle.setAttribute("data-key", "TOGGLE_GOD_MODE");
+		// godmode_toggle.innerHTML = "G"; // Key representation
 
-        this.createInputKeyCheckbox(settingsContainer, "TOGGLE_GOD_MODE", "Toggle God Mode", "Shift + G");
-		// Function to create additional checkboxes
-		this.createInputKeyCheckbox(settingsContainer, "GOD_MODE_SPEED_UP", "God Mode Speed Up", "Shift + Z");
-		this.createInputKeyCheckbox(settingsContainer, "GOD_MODE_SPEED", "God Mode Speed", "Shift + X");
+        // this.createInputKeyCheckbox(settingsContainer, "TOGGLE_GOD_MODE", "Toggle God Mode", "Shift + G");
+		// // Function to create additional checkboxes
+		// this.createInputKeyCheckbox(settingsContainer, "GOD_MODE_SPEED_UP", "God Mode Speed Up", "Shift + Z");
+		// this.createInputKeyCheckbox(settingsContainer, "GOD_MODE_SPEED", "God Mode Speed", "Shift + X");
 	}
 
 	// Create a checkbox for input keys
