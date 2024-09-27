@@ -149,10 +149,14 @@ class TableComponent {
         return element;
     }
 
-    // Add pagination controls
+    // Add pagination controls with ellipsis
     renderPaginationControls() {
         this.paginationContainer.innerHTML = ""; // Clear previous pagination controls
 
+        const maxVisiblePages = 5; // Number of page buttons to display
+        const halfVisiblePages = Math.floor(maxVisiblePages / 2);
+
+        // Add Previous button
         const prevButton = this.createElement(
             this.paginationContainer,
             "button",
@@ -164,19 +168,42 @@ class TableComponent {
             this.changePage(this.currentPage - 1),
         );
 
-        for (let i = 1; i <= this.totalPages; i++) {
-            const pageButton = this.createElement(
-                this.paginationContainer,
-                "button",
-                ["pagination-btn"],
-            );
-            pageButton.innerText = i;
-            if (i === this.currentPage) {
-                pageButton.classList.add("active");
-            }
-            pageButton.addEventListener("click", () => this.changePage(i));
+        // Determine the start and end page numbers to display
+        let startPage = Math.max(1, this.currentPage - halfVisiblePages);
+        let endPage = Math.min(
+            this.totalPages,
+            this.currentPage + halfVisiblePages,
+        );
+
+        // Adjust if we're near the start or end of the total pages
+        if (this.currentPage <= halfVisiblePages) {
+            endPage = Math.min(this.totalPages, maxVisiblePages);
+        } else if (this.currentPage + halfVisiblePages >= this.totalPages) {
+            startPage = Math.max(1, this.totalPages - maxVisiblePages + 1);
         }
 
+        // Add first page and ellipsis if needed
+        if (startPage > 1) {
+            this.createPageButton(1); // First page button
+            if (startPage > 2) {
+                this.createEllipsis(); // Add ellipsis when there's a gap
+            }
+        }
+
+        // Add page buttons for the visible range
+        for (let i = startPage; i <= endPage; i++) {
+            this.createPageButton(i);
+        }
+
+        // Add last page and ellipsis if needed
+        if (endPage < this.totalPages) {
+            if (endPage < this.totalPages - 1) {
+                this.createEllipsis(); // Add ellipsis when there's a gap
+            }
+            this.createPageButton(this.totalPages); // Last page button
+        }
+
+        // Add Next button
         const nextButton = this.createElement(
             this.paginationContainer,
             "button",
@@ -187,6 +214,28 @@ class TableComponent {
         nextButton.addEventListener("click", () =>
             this.changePage(this.currentPage + 1),
         );
+    }
+
+    // Helper function to create a page button
+    createPageButton(page) {
+        const pageButton = this.createElement(
+            this.paginationContainer,
+            "button",
+            ["pagination-btn"],
+        );
+        pageButton.innerText = page;
+        if (page === this.currentPage) {
+            pageButton.classList.add("active");
+        }
+        pageButton.addEventListener("click", () => this.changePage(page));
+    }
+
+    // Helper function to create ellipsis
+    createEllipsis() {
+        const ellipsis = this.createElement(this.paginationContainer, "span", [
+            "pagination-ellipsis",
+        ]);
+        ellipsis.innerText = "...";
     }
 
     // Method to change page
