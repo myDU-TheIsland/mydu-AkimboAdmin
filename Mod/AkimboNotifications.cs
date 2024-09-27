@@ -1,7 +1,10 @@
 ﻿using Backend;
 using Backend.AWS;
 using Microsoft.Extensions.DependencyInjection;
+using NQ;
+using NQ.Interfaces;
 using NQutils;
+using Orleans;
 using System;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
@@ -89,5 +92,19 @@ public class AkimboNotifications
         );
 
         return;
+    }
+
+    public static async Task Notify(IClusterClient orleans, ulong playerId, string message)
+    {
+        await orleans.GetChatGrain(2).SendMessage(
+            new MessageContent
+            {
+                channel = new MessageChannel
+                {
+                    channel = MessageChannelType.PRIVATE,
+                    targetId = playerId
+                },
+                message = message,
+            });
     }
 }

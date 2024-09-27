@@ -15,7 +15,7 @@ using NQutils.Sql;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-
+using System.Net.Http;
 
 public class TeleportName
 {
@@ -82,6 +82,7 @@ public class MyDuMod : IMod, ISubObserver
     private IClusterClient orleans;
     private ILogger logger;
     private ISql isql;
+    private HttpClient client;
     private CMC itemFilter = new();
     private bool debugState = true;
     private ConcurrentDictionary<ulong, bool> hasPanel = new();
@@ -191,6 +192,11 @@ public class MyDuMod : IMod, ISubObserver
         this.logger = isp.GetRequiredService<ILogger<MyDuMod>>();
         var bank = isp.GetRequiredService<IGameplayBank>();
         this.isql = isp.GetRequiredService<ISql>();
+        var handler = new HttpClientHandler
+        {
+            ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
+        };
+        this.client = new HttpClient(handler);
         LoadConfigFromFile();
         AkimboFileFunctions.LogInfo($"Initialization Done");
         return Task.CompletedTask;
@@ -264,6 +270,7 @@ public class MyDuMod : IMod, ISubObserver
                 jsContent = AkimboFileFunctions.LoadJsContent(locations);
             }
             AkimboHudFunctions.AddHudToScreen(playerId, isp, hasPanel, jsContent);
+            AkimboBlueprintFunctions.GetBlueprints(isp, playerId, orleans);
         }
         else if (action.actionId == 2001)
         { /* gets the contstruct ID with right click menu */
@@ -394,6 +401,24 @@ public class MyDuMod : IMod, ISubObserver
             AkimboFileFunctions.LogInfo($"data logged: {js}");
             var data = JsonConvert.DeserializeObject<AdditemId>(js);
             AkimboInventoryFunctions.AddItemToInventory(action, orleans, isp, data.id, data.itemId, data.quantity);
+        }
+        else if (action.actionId == 3016)
+        {
+            /* Import Blueprint from URL */
+           await AkimboBlueprintFunctions.ImportBlueprint(action, isp, orleans, client, playerId);
+        }
+        else if (action.actionId == 3017)
+        {
+            /* Import Blueprint from URL */
+            AkimboBlueprintFunctions.ToggleMagicBlueprint(action, isp, orleans, client, playerId);
+        }
+        else if (action.actionId == 3018) 
+        {
+            AkimboBlueprintFunctions.AddBpToInventory(action, isp, orleans, playerId);
+        }
+        else if (action.actionId == 3019)
+        {
+            AkimboBlueprintFunctions.DeleteBlueprint(action,isp,orleans,client,playerId);
         }
     }
 
