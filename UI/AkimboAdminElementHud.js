@@ -143,6 +143,14 @@ class AkimboAdminElementHud extends MousePage {
 				this.cInfo.ConstructId,
 			);
 		});
+		let edrmButton = createElement(constructManagementBody, "button", [
+			"dump-button",
+		]);
+		edrmButton.innerText = "Remove DRM protection";
+		edrmButton.addEventListener("click", () => {
+			this.logData(`elementId ${this.cInfo.Id} , constructId ${this.cInfo.ConstructId}`);
+			this.adminModInteraction.removeEDRMproctection(this.cInfo.Id,this.cInfo.ConstructId);
+		});
 
 		// Dispenser buttons, initially hidden
 		this.badButton = createElement(constructManagementBody, "button", [

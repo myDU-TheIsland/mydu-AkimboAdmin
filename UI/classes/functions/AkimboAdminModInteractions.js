@@ -39,6 +39,21 @@ export default class AkimboAdminModInteractions {
 			);
 		}
 	}
+	removeEDRMproctection(elementId, constructId) {
+		//logData(`elementId ${elementId} , constructId ${constructId}`);
+		if (elementId !== false) {
+			//logData(`sending data`);
+			CPPMod.sendModAction(
+				"AkimboAdmin",
+				3020,
+				[],
+				JSON.stringify({
+					id: elementId,
+					constructId: constructId,
+				}),
+			);
+		}
+	}
 	repairElement(id, constructId) {
 		if (id !== false) {
 			this.logData(id + "," + constructId);
@@ -238,11 +253,7 @@ export default class AkimboAdminModInteractions {
 		}
 	}
 
-	ImportBlueprint(
-		searchstr,
-		magicUse,
-		selectedPlayer,
-	) {
+	ImportBlueprint(searchstr, magicUse, selectedPlayer) {
 		if (searchstr !== false) {
 			CPPMod.sendModAction(
 				"AkimboAdmin",
@@ -250,16 +261,14 @@ export default class AkimboAdminModInteractions {
 				[],
 				JSON.stringify({
 					searchstr: searchstr,
-					magicUse : magicUse,
+					magicUse: magicUse,
 					selectedPlayer: selectedPlayer ? selectedPlayer : null,
 				}),
 			);
 		}
 	}
 
-	toggleMagicBlueprint(
-		id,free_deploy
-	) {
+	toggleMagicBlueprint(id, free_deploy) {
 		if (id !== false) {
 			CPPMod.sendModAction(
 				"AkimboAdmin",
@@ -273,9 +282,7 @@ export default class AkimboAdminModInteractions {
 		}
 	}
 
-	giveBlueprint(
-		id,selectedPlayer
-	) {
+	giveBlueprint(id, selectedPlayer) {
 		if (id !== false) {
 			CPPMod.sendModAction(
 				"AkimboAdmin",
@@ -289,9 +296,7 @@ export default class AkimboAdminModInteractions {
 		}
 	}
 
-	deleteBlueprint(
-		id
-	) {
+	deleteBlueprint(id) {
 		if (id !== false) {
 			CPPMod.sendModAction(
 				"AkimboAdmin",
