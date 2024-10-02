@@ -83,45 +83,83 @@ public class AkimboTeleportFunctions
     private static async void StartOrCancelTeleport(IClusterClient orleans, IServiceProvider isp, string tag, NQ.PlayerId pid, bool playerInzone, int delay)
     {
         AkimboFileFunctions.LogInfo(tag);
+
         LocationDescriptor descriptor = new LocationDescriptor
         {
             propertyName = "gameplayTag",
-            propertyValue = $"mod_teleporter_{pid}_" + tag,
+            propertyValue = tag,  // First attempt using tag directly
             algorithm = "closest"
         };
-        string str = LocatorKeyHelper.GrainKey(descriptor);
-        AkimboFileFunctions.LogInfo(str);
-        var playerPosition = await orleans.GetPlayerGrain(pid).GetPositionUpdate();
-        var test = await orleans.GetLocatorGrain(descriptor).Get(pid, playerPosition.localPosition);
-        AkimboFileFunctions.LogInfo(test.ToString());
 
+        string str = LocatorKeyHelper.GrainKey(descriptor);
+        AkimboFileFunctions.LogInfo("teleportTag found: " + str);
+
+        // Get the player's current position
+        var playerPosition = await orleans.GetPlayerGrain(pid).GetPositionUpdate();
+        NQ.DetailedLocation test = null;  // Initialize to handle scope issues
+
+        try
+        {
+            // Try to get the locator with the initial propertyValue
+            test = await orleans.GetLocatorGrain(descriptor).Get(pid, playerPosition.localPosition);
+            AkimboFileFunctions.LogInfo("Location found using tag: " + test.ToString());
+        }
+        catch (Exception ex)
+        {
+            AkimboFileFunctions.LogError($"Failed to find location using tag: {tag}, trying fallback. Error: {ex.Message}");
+
+            // Retry with fallback propertyValue
+            descriptor.propertyValue = $"mod_teleporter_{pid}_" + tag;
+
+            try
+            {
+                str = LocatorKeyHelper.GrainKey(descriptor);
+                AkimboFileFunctions.LogInfo("Retrying with fallback teleportTag: " + str);
+
+                // Retry with the modified propertyValue
+                test = await orleans.GetLocatorGrain(descriptor).Get(pid, playerPosition.localPosition);
+                AkimboFileFunctions.LogInfo("Location found using fallback: " + test.ToString());
+            }
+            catch (Exception fallbackEx)
+            {
+                AkimboFileFunctions.LogError("Fallback locator grain failed: " + fallbackEx.Message);
+                await AkimboNotifications.ErrorNotif(isp, pid, "Failed to find teleport location after fallback.");
+                return; // Exit the function, teleportation cannot proceed
+            }
+        }
+
+        // Start the countdown if the locator is valid
         playerInzone = true;
-        int countdown = delay; // countdown time in seconds
+        int countdown = delay; // Countdown time in seconds
 
         for (int i = countdown; i > 0; i--)
         {
             // Notify player of the countdown
             await AkimboNotifications.ErrorNotif(isp, pid, $"Teleportation in {i} seconds");
             await Task.Delay(1000); // Wait for 1 second
-            if (!playerInzone) // Replace with your logic to check if player is in the zone
+
+            // Check if the player is still in the zone
+            if (!playerInzone)
             {
-                await AkimboNotifications.ErrorNotif(isp, pid, "Teleportation cancelled");  
+                await AkimboNotifications.ErrorNotif(isp, pid, "Teleportation cancelled");
                 return; // Abort teleportation
             }
         }
+
         // Teleport the player if they are still in the zone after the countdown
-        if (test.relative != null && tag != "")
+        if (test != null && tag != "")
         {
-            AkimboFileFunctions.LogInfo("destination found teleporting");
+            AkimboFileFunctions.LogInfo("Destination found, teleporting...");
             await AkimboNotifications.ErrorNotif(isp, pid, "Teleporting...");
             await orleans.GetPlayerGrain(pid).TeleportPlayer(test.relative);
         }
-        else 
+        else
         {
-            AkimboFileFunctions.LogInfo("error occured while trying to teleport");
+            AkimboFileFunctions.LogInfo("Error occurred while trying to teleport");
             await AkimboNotifications.ErrorNotif(isp, pid, "... Error ... Error ... Error ... ");
         }
     }
+
 
     public static async void TeleportToPlayer(ModAction action, IClusterClient orleans, IServiceProvider isp, NQ.PlayerId playerId)
     {

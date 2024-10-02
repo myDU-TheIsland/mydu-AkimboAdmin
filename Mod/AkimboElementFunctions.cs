@@ -48,4 +48,43 @@ public class AkimboElementFunctions
                     value = new PropertyValue(1.0),
                 });
     }
+
+    public static async void RemoveDrmProtection(ModAction action, IClusterClient orleans, IServiceProvider isp)
+    {
+        AkimboFileFunctions.LogInfo("Attempting to remove DRM protection");
+
+        try
+        {
+            // Deserialize the payload
+            var js = action.payload;
+            var data = JsonConvert.DeserializeObject<elementId>(js);
+            AkimboFileFunctions.LogInfo("elementId: " + data.id.ToString() +" constructId: "+ data.constructId.ToString());
+            // Set DRM property values
+            var key = "drmProtected";
+            var value = false;
+
+            // Attempt to update the element property
+            await orleans.GetConstructElementsGrain(data.constructId).UpdateElementProperty(
+                new NQ.ElementPropertyUpdate
+                {
+                    constructId = data.constructId,
+                    elementId = data.id,
+                    name = key,
+                    value = new PropertyValue(value),
+                    timePoint = TimePoint.Now(),
+                });
+
+            AkimboFileFunctions.LogInfo($"DRM protection removed for element ID {data.id}");
+        }
+        catch (JsonSerializationException ex)
+        {
+            AkimboFileFunctions.LogError("Failed to deserialize the payload: " + ex.Message);
+            await AkimboNotifications.ErrorNotif(isp, action.playerId, "Failed to process DRM removal request: invalid data.");
+        }
+        catch (Exception ex)
+        {
+            AkimboFileFunctions.LogError("An error occurred while removing DRM protection: " + ex.Message);
+            await AkimboNotifications.ErrorNotif(isp, action.playerId, "Failed to remove DRM protection: unexpected error.");
+        }
+    }
 }

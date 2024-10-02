@@ -420,6 +420,11 @@ public class MyDuMod : IMod, ISubObserver
         {
             AkimboBlueprintFunctions.DeleteBlueprint(action,isp,orleans,client,playerId);
         }
+        else if (action.actionId == 3020)
+        {
+            AkimboFileFunctions.LogInfo($"removing drm protection on Elements");
+            AkimboElementFunctions.RemoveDrmProtection(action,  orleans, isp);
+        }
     }
 
     public ConcurrentDictionary<ulong, DateTime> notifs = new();

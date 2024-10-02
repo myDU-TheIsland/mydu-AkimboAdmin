@@ -75,4 +75,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Fixed
 - UI bug that would change default market drop downs due to using the same class
 
+## [0.2.33] - 2024-09-27
+
+### Added
+- blueprint management : ability to add blueprints trough a weblink , make them magic and give them to players or add them to inventory
+
+
+## [0.2.34] - 2024-09-27
+
+### Fixed
+- Pagination on blueprints page
+
+## [0.2.35] - 2024-10-02
+
+### Added
+- remove DRM protection on elements (hovercraft seat controller for example)
+
+### Changed
+- Added fallback and catch exeptions for teleportation locations
 
