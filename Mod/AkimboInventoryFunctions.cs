@@ -129,16 +129,25 @@ public class AkimboInventoryFunctions
             Tag.HttpCall("inserting items") // use a dummy tag, those only serve for logging/tracing
         );
 
-        var container = await orleans.GetPlayerInventoryGrain(playerId).GetActivePrimaryContainer();
-
-        // Pass the collection to the GiveOrTakeItems method
-        await orleans.GetAbstractStorage(playerId, container).GiveOrTakeItems(tr, itemsToGive, new NQutils.Storage.OperationOptions
+       // var container = await orleans.GetPlayerInventoryGrain(playerId).GetActivePrimaryContainer();
+        var itemStorage = isp.GetRequiredService<IItemStorageService>();
+        var inventory = StorageRef.PlayerInventoryWithoutPrimary(playerId);
+        await itemStorage.GiveOrTakeItems(tr, inventory, itemsToGive, new NQutils.Storage.OperationOptions
         {
             BypassLock = true,
             AllowOverload = true,
             AllowPartial = true,
             MakeManifest = false,
         });
+        // Pass the collection to the GiveOrTakeItems method -- OLD CODE maybe reuse it to add it to linked container instead of nanopack
+
+        /*await orleans.GetAbstractStorage(playerId, container).GiveOrTakeItems(tr, itemsToGive, new NQutils.Storage.OperationOptions
+        {
+            BypassLock = true,
+            AllowOverload = true,
+            AllowPartial = true,
+            MakeManifest = false,
+        });*/
 
         await tr.Commit();
 

@@ -16,6 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Net.Http;
+using NQ.Grains.Core;
 
 public class TeleportName
 {
@@ -90,6 +91,7 @@ public class MyDuMod : IMod, ISubObserver
     private ConcurrentDictionary<ulong, bool> hasElementPanel = new();
     private List<string> locations = new List<string> { "Alpha", "Beta", "Gamma", "Delta", "Epsilon", "Yota", "Omega" };
     private List<string> access = new List<string>();
+    private string version = "v0.2.36";
     public  void Debugger(string message)
     {
         if (!debugState)
@@ -113,6 +115,7 @@ public class MyDuMod : IMod, ISubObserver
             {
                 locations = config.TeleportLocations;
                 debugState = config.Debug;
+                AkimboFileFunctions.debugEnabled = config.Debug;
                 itemFilter = config.itemFilter;
                 access = config.Access;
             }
@@ -198,7 +201,7 @@ public class MyDuMod : IMod, ISubObserver
         };
         this.client = new HttpClient(handler);
         LoadConfigFromFile();
-        AkimboFileFunctions.LogInfo($"Initialization Done");
+        AkimboFileFunctions.LogInfo($"Akimbo AdminHUD {version}: Initialization Done");
         return Task.CompletedTask;
     }
 

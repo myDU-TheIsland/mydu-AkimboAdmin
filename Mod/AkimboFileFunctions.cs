@@ -30,14 +30,18 @@ using NQutils.Messages;
 
 public class AkimboFileFunctions
 {
-    private static string logFilePath = GetFilePath("AkimboModLog.log"); // Log file in the Mods directory
+    public static bool debugEnabled { get; set; } = false;
+    public static string logName { get; set; } = "AkimboModLog";
+    public static string folderName { get; set; } = "ModAkimboAdmin";
+
+    private static string logFilePath = GetFilePath($"{logName}.log"); // Log file in the Mods directory
     public AkimboFileFunctions()
 	{
 	}
     public static string GetModsDirectoryPath()
     {
         var basePath = AppDomain.CurrentDomain.BaseDirectory;
-        return Path.Combine(basePath, "Mods/ModAkimboAdmin");
+        return Path.Combine(basePath, $"Mods/{folderName}");
     }
 
     // get the file path 
@@ -169,16 +173,28 @@ public class AkimboFileFunctions
     // Example method to log different levels
     public static void LogInfo(string message)
     {
-        WriteToLog(message, "INFO");
+        if (debugEnabled)
+        {
+            WriteToLog(message, "INFO");
+        }
+
     }
 
     public static void LogError(string message)
     {
-        WriteToLog(message, "ERROR");
+        if (debugEnabled)
+        {
+            WriteToLog(message, "ERROR");
+        }
+
     }
 
     public static void LogDebug(string message)
     {
-        WriteToLog(message, "DEBUG");
+        if (debugEnabled)
+        {
+            WriteToLog(message, "DEBUG");
+        }
+
     }
 }

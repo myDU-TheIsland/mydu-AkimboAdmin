@@ -79,8 +79,20 @@ public class AkimboHudFunctions
         })); 
         var infos = await orleans.GetConstructInfoGrain(action.constructId).Get();
         var cidOwner = await orleans.GetConstructGrain(action.constructId).GetOwner();
-        var cidoinf = await orleans.GetPlayerGrain(cidOwner.playerId).GetName();
-      
+        AkimboFileFunctions.LogInfo(cidOwner.playerId.ToString());
+        NamedEntity ownerName = new NamedEntity();
+        if (cidOwner.playerId != 0)
+        {
+            ownerName = await orleans.GetPlayerGrain(cidOwner.playerId).GetName();
+            AkimboFileFunctions.LogInfo($"organization name {ownerName}");
+        }
+        
+        AkimboFileFunctions.LogInfo(cidOwner.organizationId.ToString());
+        if (cidOwner.organizationId != 0) {
+            ownerName = await orleans.GetOrganizationGrain(cidOwner.organizationId).GetName();
+            AkimboFileFunctions.LogInfo($"organization name {ownerName}");
+        }
+       
         await isp.GetRequiredService<IPub>().NotifyTopic(Topics.PlayerNotifications(playerId),
                 new NQutils.Messages.ModTriggerHudEventRequest(new ModTriggerHudEvent
                 {
@@ -89,7 +101,7 @@ public class AkimboHudFunctions
                     {
                         Id = action.constructId.ToString(),
                         Name = infos.rData.name.ToString(),
-                        Owner = cidoinf,
+                        Owner = ownerName,
                         // Add more properties as needed
                     }),
                 }));
@@ -136,6 +148,7 @@ public class AkimboHudFunctions
         if (etype.elementType == 3418287402 || etype.elementType == 3018061314 || etype.elementType == 868211900) {
             hasTeleport = true;
         }
+        AkimboFileFunctions.LogInfo(etype.Location.position.ToString());
         await isp.GetRequiredService<IPub>().NotifyTopic(Topics.PlayerNotifications(playerId),
                 new NQutils.Messages.ModTriggerHudEventRequest(new ModTriggerHudEvent
                 {
@@ -147,7 +160,8 @@ public class AkimboHudFunctions
                         Dispensers = hasDispenser,
                         Teleporters = hasTeleport,
                         locations = locations,
-                    }),
+                        ElementLocation = etype.Location.position.ToString(),
+    }),
                 }));
     }
 }
