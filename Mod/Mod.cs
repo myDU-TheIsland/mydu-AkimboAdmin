@@ -101,7 +101,7 @@ public class MyDuMod : IMod, ISubObserver
     private ConcurrentDictionary<ulong, bool> hasElementPanel = new();
     private List<string> locations = new List<string> { "Alpha", "Beta", "Gamma", "Delta", "Epsilon", "Yota", "Omega" };
     private List<string> access = new List<string>();
-    private string version = "v0.2.37-experimental";
+    private string version = "v0.2.37";
     private AkimboInactivityManager akimboInactivity;
     public  void Debugger(string message)
     {

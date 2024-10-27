@@ -12,6 +12,7 @@
 -  **Teleportation Management**: Teleport players or yourself to predefined locations/custom locations **ATTENTION**: only tp command works for custom locations .. working on ::POS strings to work.
 -  **Item Management**: Fill your inventory (or a friend's) with all items from a filter list or give single items.
 -  **Debugging**: In-game debugging panel for JavaScript interaction.
+-  **Inactive Player Management**: Added a inactive player manager that can be turned on/off & configured in the config file. this is an optional addon that is turned off by default
 
 ### Prerequisites
 
