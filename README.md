@@ -72,7 +72,7 @@ MyDU Server Installation Directory
    {
       "Debug": true,
       "Access":["bo","Employees","staff"], // game,bo,Employees,vip,staff,Administrator,
-      "TeleportLocations": [
+      "TeleportLocations": [ // up to 15 locations -- you can change the location names only note that already assigned teleport locations will not longer work in UI
          "Location1",
          "Location2",
          "Location3",
@@ -112,6 +112,13 @@ MyDU Server Installation Directory
             "CombatDefense": 100
          },
          "talentId": 1023700067
+      },
+      // Optional
+      "inactivityManager":{
+         "enabled":true,
+         "inactivityThreshold":600, // the threshold that needs to be exceeded before a player gets disconnected -- Example: 600 seconds = 10 minutes.
+         "timerCheck":10000, // interval when the timer checks for player inactivity in miliseconds -- Example : 10000 miliseconds = 10 seconds.
+         "autoReset":true,
       }
    }
    ```

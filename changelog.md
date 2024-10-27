@@ -94,7 +94,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Changed
 - Added fallback and catch exeptions for teleportation locations
 
-## [0.2.35] - 2024-10-26
+## [0.2.36] - 2024-10-26
 
 ### Added
 - version in the c# code, it will log the version in the logs
@@ -102,4 +102,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Fixed
 - Bug in construct panel when the construct was owned by a organization
 - Bug that would spawn items in linked container instead of nanopack
+
+## [0.2.37] - 2024-10-27
+
+### Added
+- Inactivity Manager with configurable options in the config file (optional settings , by default its turned off)
+
 

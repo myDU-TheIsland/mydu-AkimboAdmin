@@ -67,6 +67,15 @@ public class CMC
     public Dictionary<string, double> recursiveSpawnGroups = new();
     public ulong talentId = 0;
 }
+
+public class IAM 
+{
+    public bool enabled = false;
+    public int inactivityThreshold;
+    public int timerCheck;
+    public bool autoReset;
+}
+
 public class Config
 {
     public bool Debug { get; set; }
@@ -74,6 +83,7 @@ public class Config
     public List<string> TeleportLocations { get; set; }
     
     public CMC itemFilter { get; set; }
+    public IAM inactivityManager { get; set; }
 }
 //Mod class, must be called MyDuMod and implements IMod
 public class MyDuMod : IMod, ISubObserver
@@ -91,7 +101,8 @@ public class MyDuMod : IMod, ISubObserver
     private ConcurrentDictionary<ulong, bool> hasElementPanel = new();
     private List<string> locations = new List<string> { "Alpha", "Beta", "Gamma", "Delta", "Epsilon", "Yota", "Omega" };
     private List<string> access = new List<string>();
-    private string version = "v0.2.36";
+    private string version = "v0.2.37-experimental";
+    private AkimboInactivityManager akimboInactivity;
     public  void Debugger(string message)
     {
         if (!debugState)
@@ -115,9 +126,26 @@ public class MyDuMod : IMod, ISubObserver
             {
                 locations = config.TeleportLocations;
                 debugState = config.Debug;
-                AkimboFileFunctions.debugEnabled = config.Debug;
                 itemFilter = config.itemFilter;
                 access = config.Access;
+                AkimboFileFunctions.debugEnabled = config.Debug;
+                if (config.inactivityManager != null) 
+                {
+                    akimboInactivity.inactivityThreshold = config.inactivityManager.inactivityThreshold;
+                    akimboInactivity.timerCheck = config.inactivityManager.timerCheck;
+                    akimboInactivity.autoReset = config.inactivityManager.autoReset;
+                    akimboInactivity.enabled = config.inactivityManager.enabled;
+                    if (akimboInactivity.enabled)
+                    {
+                        akimboInactivity.StartTimer();
+                    }
+                    else
+                    {
+                        AkimboFileFunctions.LogInfo("Inactive Player checks disabled");
+                    }
+
+                }
+                
             }
         }
         else
@@ -129,7 +157,7 @@ public class MyDuMod : IMod, ISubObserver
     // Helper method to check if the user has the specified role
     private bool HasRole(string role, string roles)
     {
-        AkimboFileFunctions.LogInfo($"checking: {role} in: {roles}");
+        //AkimboFileFunctions.LogInfo($"checking: {role} in: {roles}");
         if (string.IsNullOrEmpty(roles))
             return false;
         var rolesArray = roles.Split(',');
@@ -169,10 +197,12 @@ public class MyDuMod : IMod, ISubObserver
             bool hasVip = HasRole("vip", roles);
             if (hasEmployees || hasStaff || hasBO || hasAdmin || hasVip)
             {
+                AkimboFileFunctions.LogInfo($"Player with {playerId} has permissions to open admin UI");
                 return true;
             }
             else 
             {
+                AkimboFileFunctions.LogInfo($"Player with {playerId} does not have permissions to open admin UI");
                 return false;
             }
         }
@@ -187,6 +217,39 @@ public class MyDuMod : IMod, ISubObserver
     {
         return "AkimboAdmin";
     }
+    public Task ElementUseStart(string _, NQ.ElementUse eu)
+    {
+        // wrap around a try statement to catch exceptions
+        try
+        {
+            akimboInactivity.PlayerStartedUsingElement(eu.playerId);
+            return Task.CompletedTask;
+        }
+        catch (Exception ex)
+        {
+            // Log the exception details for debugging
+            AkimboFileFunctions.LogError($"An error occurred in ElementPropertyUpdate: {ex.Message}");
+            AkimboFileFunctions.LogError(ex.StackTrace);
+            return Task.CompletedTask;
+        }
+    }
+
+    public Task ElementUseStop(string _, NQ.ElementUse eu)
+    {
+        // wrap around a try statement to catch exceptions
+        try
+        {
+            akimboInactivity.PlayerStoppedUsingElement(eu.playerId);
+            return Task.CompletedTask;
+        }
+        catch (Exception ex)
+        {
+            // Log the exception details for debugging
+            AkimboFileFunctions.LogError($"An error occurred in ElementPropertyUpdate: {ex.Message}");
+            AkimboFileFunctions.LogError(ex.StackTrace);
+            return Task.CompletedTask;
+        }
+    }
 
     public Task Initialize(IServiceProvider isp)
     {
@@ -195,12 +258,19 @@ public class MyDuMod : IMod, ISubObserver
         this.logger = isp.GetRequiredService<ILogger<MyDuMod>>();
         var bank = isp.GetRequiredService<IGameplayBank>();
         this.isql = isp.GetRequiredService<ISql>();
+        this.akimboInactivity = new AkimboInactivityManager(isp);
         var handler = new HttpClientHandler
         {
             ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
         };
         this.client = new HttpClient(handler);
         LoadConfigFromFile();
+        isp.GetRequiredService<IHookCallManager>().Register(
+             "ConstructElementsGrain.ElementUseStart", HookMode.PreCall, this,
+             "ElementUseStart");
+        isp.GetRequiredService<IHookCallManager>().Register(
+             "ConstructElementsGrain.ElementUseStop", HookMode.PreCall, this,
+             "ElementUseStop");
         AkimboFileFunctions.LogInfo($"Akimbo AdminHUD {version}: Initialization Done");
         return Task.CompletedTask;
     }
@@ -210,10 +280,20 @@ public class MyDuMod : IMod, ISubObserver
     {
         // Remove panels for the player
         ClearPlayerPanels(playerId);
-
         // Create the ModInfo and add actions if the player is authorized
         var res = CreateDefaultModInfo();
+        // Check if player can use the UI
         bool cUse = await CheckRoles(playerId);
+        // check if player is a bot
+        bool pbot = await orleans.GetPlayerGrain(playerId).IsBot();
+        // if it aint a bot or an admin && inactivity checks have been abled add player to inactivity
+        if (!pbot && akimboInactivity.enabled && !cUse)
+        {
+            AkimboFileFunctions.LogInfo("inactivity checks activated and player has no admin right, adding player to inactivity checklist");
+            akimboInactivity.RemovePlayer(playerId);
+            var ppos = await orleans.GetPlayerGrain(playerId).GetPositionUpdate();
+            akimboInactivity.AddPlayer(playerId, ppos.universePosition);
+        }
         AkimboFileFunctions.LogInfo($"if checks passed the menu will be populated now...");
         if (admin || cUse)
         res.actions.AddRange(new List<ModActionDefinition>
