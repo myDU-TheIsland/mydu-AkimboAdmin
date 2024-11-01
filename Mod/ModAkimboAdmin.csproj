@@ -34,13 +34,6 @@
     <PackageReference Include="prometheus-net" Version="6.0.0" />
     <PackageReference Include="prometheus-net.AspNetCore" Version="6.0.0" />
   </ItemGroup>
-   <Target Name="CopyDllToDist" AfterTargets="Build">
-    <Copy 
-      SourceFiles="$(OutputPath)$(AssemblyName).dll" 
-      DestinationFolder="../dist/" />
-    <!-- Optionally delete temp folder -->
-    <RemoveDir Directories="../dist_temp" />
-  </Target>
   <!-- https://github.com/dotnet/efcore/issues/15047 -->
   <Target Name="AddAssemblyAliasToReactiveAsync" AfterTargets="ResolveAssemblyReferences">
     <ItemGroup>
