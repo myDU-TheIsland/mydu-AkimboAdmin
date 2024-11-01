@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Nullable>annotations</Nullable>
     <OutputPath>../dist_temp/</OutputPath>
-    <PublishSingleFile>true</PublishSingleFile>
+    <PublishSingleFile>false</PublishSingleFile>
     <SelfContained>false</SelfContained>
   </PropertyGroup>
   <ItemGroup>
