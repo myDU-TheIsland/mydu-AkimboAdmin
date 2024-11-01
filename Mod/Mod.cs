@@ -301,25 +301,25 @@ public class MyDuMod : IMod, ISubObserver
                     new ModActionDefinition
                     {
                         id = 2001,
-                        label = "AkimboAdmin\\Open Construct Hud",
+                        label = "Admin\\Open Construct Hud",
                         context = ModActionContext.Construct,
                     },
                     new ModActionDefinition
                     {
                         id = 2002,
-                        label = "AkimboAdmin\\Open Element Hud",
+                        label = "Admin\\Open Element Hud",
                         context = ModActionContext.Element,
                     },
                     new ModActionDefinition
                     {
                         id = 2003,
-                        label = "AkimboAdmin\\Players\\Get player id",
+                        label = "Admin\\Players\\Get player id",
                         context = ModActionContext.Avatar,
                     },
                     new ModActionDefinition
                     {
                         id = 2011,
-                        label = "AkimboAdmin\\Admin Hud",
+                        label = "Admin\\Admin Hud",
                         context = ModActionContext.Global,
                     },
                 });

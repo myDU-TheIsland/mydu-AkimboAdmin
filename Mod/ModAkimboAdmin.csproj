@@ -6,11 +6,27 @@
     <SelfContained>false</SelfContained>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NQutils" />
-    <Reference Include="Backend" />
-    <Reference Include="Backend.PubSub" />
-    <Reference Include="Interfaces" />
-    <Reference Include="Router.Orleans" />
+    <Reference Include="Backend">
+      <HintPath>NQ\Backend.dll</HintPath>
+    </Reference>
+    <Reference Include="Backend.PubSub">
+      <HintPath>NQ\Backend.PubSub.dll</HintPath>
+    </Reference>
+    <Reference Include="Backend.Telemetry">
+      <HintPath>NQ\Backend.Telemetry.dll</HintPath>
+    </Reference>
+    <Reference Include="BotLib">
+      <HintPath>NQ\BotLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Interfaces">
+      <HintPath>NQ\Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="NQutils">
+      <HintPath>NQ\NQutils.dll</HintPath>
+    </Reference>
+    <Reference Include="Router.Orleans">
+      <HintPath>NQ\Router.Orleans.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Orleans.Core" Version="3.6.5" />
