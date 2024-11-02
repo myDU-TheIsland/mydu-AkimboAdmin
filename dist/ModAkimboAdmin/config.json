@@ -1,24 +1,7 @@
 {
-  "Debug": true,
+  "Debug": false,
   "Access": ["bo", "Employees", "staff"],
-  "TeleportLocations": [
-    "Location1",
-    "Location2",
-    "Location3",
-    "Location4",
-    "Location5",
-    "Location6",
-    "Location7",
-    "Location8",
-    "Location9",
-    "Location10",
-    "Location11",
-    "Location12",
-    "Location13",
-    "Location14",
-    "Location15",
-    "test"
-  ],
+  "TeleportLocations": [],
   "itemFilter": {
     "SingleItems": {
       "TerritoryUnitBasic": 1,
@@ -53,11 +36,7 @@
     },
     "talentId": 1023700067
   },
-  // Optional
   "inactivityManager": {
-    "enabled": true,
-    "inactivityThreshold": 600, // the threshold that needs to be exceeded before a player gets disconnected -- Example: 600 seconds = 10 minutes.
-    "timerCheck": 10000, // interval when the timer checks for player inactivity in miliseconds -- Example : 10000 miliseconds = 10 seconds.
-    "autoReset": true
+    "enabled": false
   }
 }
